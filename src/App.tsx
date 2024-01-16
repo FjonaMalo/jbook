@@ -1,9 +1,22 @@
-import React, { useState } from "react";
+import * as esbuild from "esbuild-wasm";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
+
+  const startService = async () => {
+    const service = await esbuild.startService({
+      worker: true,
+      wasmURL: "/esbuild.wasm",
+    });
+    console.log("service", service);
+  };
+
+  useEffect(() => {
+    startService();
+  }, []);
 
   const handleClick = () => {
     console.log("input", input);
